@@ -88,11 +88,13 @@
         const javaDotsInterval = startLoadingDots("java-dots");
         const bedrockDotsInterval = startLoadingDots("bedrock-dots");
 
-        async function checkServerStatus(url, statusId, playersId, dotsInterval) {
+        async function checkServerStatus(url, statusId, playersId, dotsInterval, dotsId) {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 clearInterval(dotsInterval);  // Stop the loading animation
+                document.getElementById(dotsId).textContent = ""; // Clear dots text
+
                 const statusElement = document.getElementById(statusId);
                 const playersElement = document.getElementById(playersId);
 
@@ -106,9 +108,7 @@
                     if (data.players) {
                         const onlinePlayers = data.players.online;
                         const maxPlayers = data.players.max;
-                        playersElement.innerHTML = `
-                            Počet hráčov online: ${onlinePlayers}/${maxPlayers}
-                        `;
+                        playersElement.innerHTML = `Počet hráčov online: ${onlinePlayers}/${maxPlayers}`;
                     }
                 } else {
                     // Update status to "Offline" with red color
@@ -122,4 +122,27 @@
             } catch (error) {
                 console.error('Chyba pri kontrole stavu servera:', error);
                 clearInterval(dotsInterval);  // Stop the loading animation
-              
+                document.getElementById(dotsId).textContent = ""; // Clear dots text
+
+                const statusElement = document.getElementById(statusId);
+                statusElement.textContent = "Offline";
+                statusElement.classList.add("offline");
+                statusElement.classList.remove("online");
+
+                // Show message that statistics couldn't be loaded
+                document.getElementById(playersId).innerHTML = "Server je offline, nemožno načítať štatistiky.";
+            }
+        }
+
+        // Check the status of both servers on load
+        checkServerStatus(javaApiUrl, "java-status", "java-players", javaDotsInterval, "java-dots");
+        checkServerStatus(bedrockApiUrl, "bedrock-status", "bedrock-players", bedrockDotsInterval, "bedrock-dots");
+
+        // Optional: Refresh status every minute
+        setInterval(() => {
+            checkServerStatus(javaApiUrl, "java-status", "java-players", javaDotsInterval, "java-dots");
+            checkServerStatus(bedrockApiUrl, "bedrock-status", "bedrock-players", bedrockDotsInterval, "bedrock-dots");
+        }, 60000); // Check every 60 seconds
+    </script>
+</body>
+</html>
