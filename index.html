@@ -122,20 +122,4 @@
             } catch (error) {
                 console.error('Chyba pri kontrole stavu servera:', error);
                 clearInterval(dotsInterval);  // Stop the loading animation
-                document.getElementById(statusId).textContent = "Chyba pri kontrole stavu";
-                document.getElementById(playersId).innerHTML = "Server je offline, nemožno načítať štatistiky.";
-            }
-        }
-
-        // Check the status of both servers on load
-        checkServerStatus(javaApiUrl, "java-status", "java-players", javaDotsInterval);
-        checkServerStatus(bedrockApiUrl, "bedrock-status", "bedrock-players", bedrockDotsInterval);
-
-        // Optional: Refresh status every minute
-        setInterval(() => {
-            checkServerStatus(javaApiUrl, "java-status", "java-players", javaDotsInterval);
-            checkServerStatus(bedrockApiUrl, "bedrock-status", "bedrock-players", bedrockDotsInterval);
-        }, 60000); // Check every 60 seconds
-    </script>
-</body>
-</html>
+              
