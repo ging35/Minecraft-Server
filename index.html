@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server SOSCH</title>
+    <style>
+        /* Basic reset and styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: #ffffff;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2em;
+            color: #f0d600;
+        }
+        .status {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .status.online {
+            color: #00ff00;
+        }
+        .status.offline {
+            color: #ff0000;
+        }
+        .info {
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        a {
+            color: #0d9dff;
+            text-decoration: none;
+        }
+        hr {
+            border: 1px solid #444;
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Minecraft Server SOSCH</h1>
+        <div id="server-status" class="status">Kontrola stavu servera<span id="dots">...</span></div>
+        <div id="player-info" class="info"></div>
+
+        <div class="info">
+            <h3>IP a Port:</h3>
+            <p>taking-superior.gl.joinmc.link | Port: 3070</p>
+        </div>
+
+        <hr>
+
+        <div class="info">
+            <h3>Discord:</h3>
+            <p><a href="https://discord.gg/dTTdNrgBSM" target="_blank">Pripojte sa na Discord</a></p>
+        </div>
+    </div>
+
+    <script>
+        // API URL for the Minecraft server status
+        const apiUrl = 'https://api.mcsrvstat.us/2/taking-superior.gl.joinmc.link';
+
+        // Dot animation function
+        function startLoadingDots(id) {
+            let dots = 0;
+            return setInterval(() => {
+                document.getElementById(id).textContent = '.'.repeat((dots % 4) + 1);
+                dots++;
+            }, 500);
+        }
+
+        // Start loading dots animation
+        const dotsInterval = startLoadingDots("dots");
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                clearInterval(dotsInterval); // Stop the loading animation
+                document.getElementById("dots").textContent = ""; // Clear dots text
+
+                const statusElement = document.getElementById("server-status");
+                const playersElement = document.getElementById("player-info");
+
+                if (data.online) {
+                    // Update status to "Online" with green color
+                    statusElement.textContent = "Server je Online";
+                    statusElement.classList.add("online");
+                    statusElement.classList.remove("offline");
+
+                    // Show player count if available
+                    if (data.players) {
+                        const onlinePlayers = data.players.online;
+                        const maxPlayers = data.players.max;
+                        playersElement.innerHTML = `Počet hráčov online: ${onlinePlayers}/${maxPlayers}`;
+                    }
+                } else {
+                    // Update status to "Offline" with red color
+                    statusElement.textContent = "Server je Offline";
+                    statusElement.classList.add("offline");
+                    statusElement.classList.remove("online");
+
+                    // Show message that statistics couldn't be loaded
+                    playersElement.innerHTML = "Server je offline, nemožno načítať štatistiky.";
+                }
+            } catch (error) {
+                console.error('Chyba pri kontrole stavu servera:', error);
+                clearInterval(dotsInterval); // Stop the loading animation
+                document.getElementById("dots").textContent = ""; // Clear dots text
+
+                const statusElement = document.getElementById("server-status");
+                statusElement.textContent = "Server je Offline";
+                statusElement.classList.add("offline");
+                statusElement.classList.remove("online");
+
+                // Show message that statistics couldn't be loaded
+                document.getElementById("player-info").innerHTML = "Server je offline, nemožno načítať štatistiky.";
+            }
+        }
+
+        // Check server status on load
+        checkServerStatus();
+
+        // Optional: Refresh status every minute
+        setInterval(checkServerStatus, 60000); // Check every 60 seconds
+    </script>
+</body>
+</html>
