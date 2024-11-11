@@ -35,7 +35,7 @@
 
         .navbar {
             display: flex;
-            align-items: center; /* Fix vertical alignment */
+            align-items: center;
             gap: 20px;
             position: relative;
         }
@@ -59,16 +59,18 @@
         }
 
         .dropdown-content {
-            display: none;
             position: absolute;
             background-color: #333333;
             min-width: 160px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            top: 100%;
-            opacity: 0; /* For fade-in animation */
+            top: 100%; /* Position directly below the header */
+            left: 0;
+            margin-top: 5px; /* Adds a small gap between the header and dropdown */
+            opacity: 0;
             transform: translateY(-10px);
             transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none; /* Prevents hover until visible */
+            z-index: 1000;
         }
 
         .dropdown-content a {
@@ -85,9 +87,9 @@
 
         /* Show dropdown with animation */
         .dropdown:hover .dropdown-content {
-            display: block;
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto; /* Enable hover */
         }
 
         /* Main container styling */
@@ -98,7 +100,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 90%;
-            margin-top: 60px; /* Space for fixed header */
+            margin-top: 80px; /* Space for fixed header */
         }
 
         h1 {
@@ -110,9 +112,11 @@
             font-size: 1.2em;
             margin: 20px 0;
         }
+
         .status.online {
             color: #00ff00;
         }
+
         .status.offline {
             color: #ff0000;
         }
