@@ -25,56 +25,71 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 90%;
-            text-align: left;
+            text-align: center;
         }
         h1 {
             font-size: 2em;
             color: #f0d600;
-            text-align: center; /* Keep header centered */
+            margin-bottom: 20px;
         }
-        .info {
-            font-size: 1.2em;
-            margin-top: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .day {
-            display: flex;
-            justify-content: space-between; /* Align day and hours with space between */
-            margin: 10px 0;
-        }
-        .day strong {
-            min-width: 120px; /* Optional: Set a minimum width for day labels for consistency */
+        th, td {
+            padding: 10px;
             text-align: left;
+        }
+        th {
+            color: #f0d600;
+            font-size: 1.2em;
+        }
+        td {
+            color: #ffffff;
+            font-size: 1em;
+        }
+        tr:nth-child(even) {
+            background-color: #2e2e2e;
         }
         a {
             color: #0d9dff;
             text-decoration: none;
-            text-align: center;
-            display: block;
+            display: inline-block;
             margin-top: 20px;
-        }
-        hr {
-            border: 1px solid #444;
-            width: 80%;
-            margin: 20px auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Otvaracie časy</h1>
-        <div class="info">
-            <div class="day"><strong>Pondelok:</strong> <span>9:30 - 14:30, 16:00 - 21:30</span></div>
-            <div class="day"><strong>Utorok:</strong> <span>9:30 - 14:30, 16:00 - 21:30</span></div>
-            <div class="day"><strong>Streda:</strong> <span>9:30 - 14:30, 16:00 - 21:30</span></div>
-            <div class="day"><strong>Štvrtok:</strong> <span>9:30 - 15:45, 16:55 - 21:30</span></div>
-            <div class="day"><strong>Piatok:</strong> <span>9:30 - 12:40, 13:40 - 15:15</span></div>
-        </div>
-
-        <hr>
-
-        <div class="info">
-            <a href="index.html">Späť na hlavnú stránku</a>
-        </div>
+        <table>
+            <tr>
+                <th>Deň</th>
+                <th>Čas</th>
+            </tr>
+            <tr>
+                <td>Pondelok</td>
+                <td>9:30 - 14:30, 16:00 - 21:30</td>
+            </tr>
+            <tr>
+                <td>Utorok</td>
+                <td>9:30 - 14:30, 16:00 - 21:30</td>
+            </tr>
+            <tr>
+                <td>Streda</td>
+                <td>9:30 - 14:30, 16:00 - 21:30</td>
+            </tr>
+            <tr>
+                <td>Štvrtok</td>
+                <td>9:30 - 15:45, 16:55 - 21:30</td>
+            </tr>
+            <tr>
+                <td>Piatok</td>
+                <td>9:30 - 12:40, 13:40 - 15:15</td>
+            </tr>
+        </table>
+        
+        <a href="index.html">Späť na hlavnú stránku</a>
     </div>
 </body>
 </html>
