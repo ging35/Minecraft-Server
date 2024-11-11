@@ -110,12 +110,12 @@
 
         <div class="info">
             <h3>IP JAVA (PC):</h3>
-            <p>taking-superior.gl.joinmc.link</p>
+            <p>community-killed.gl.joinmc.link</p>
         </div>
 
         <div class="info">
             <h3>IP a Port BEDROCK (Mobil, Konzoly):</h3>
-            <p>ability-counter.gl.at.ply.gg:3070</p>
+            <p>t-subscriptions.gl.at.ply.gg:3262</p>
         </div>
 
         <hr>
@@ -127,60 +127,38 @@
     </div>
 
     <script>
-        const apiUrl = 'https://api.mcsrvstat.us/2/taking-superior.gl.joinmc.link';
+        const javaApiUrl = 'https://api.mcsrvstat.us/2/community-killed.gl.joinmc.link';
+        const bedrockApiUrl = 'https://api.mcsrvstat.us/bedrock/t-subscriptions.gl.at.ply.gg:3262';
 
         function startLoadingDots(id) {
             let dots = 0;
             return setInterval(() => {
-                document.getElementById(id).textContent = '.'.repeat((dots % 4) + 1);
-                dots++;
+                document.getElementById(id).textContent = '.'.repeat((dots++ % 3) + 1);
             }, 500);
         }
 
-        const dotsInterval = startLoadingDots("dots");
-
-        async function checkServerStatus() {
+        async function fetchServerStatus(apiUrl, statusElement) {
+            const loadingInterval = startLoadingDots("dots");
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                clearInterval(dotsInterval);
-                document.getElementById("dots").textContent = "";
-
-                const statusElement = document.getElementById("server-status");
-                const playersElement = document.getElementById("player-info");
 
                 if (data.online) {
-                    statusElement.textContent = "Server je Online";
-                    statusElement.classList.add("online");
-                    statusElement.classList.remove("offline");
-
-                    if (data.players) {
-                        const onlinePlayers = data.players.online;
-                        const maxPlayers = data.players.max;
-                        playersElement.innerHTML = `Počet hráčov online: ${onlinePlayers}/${maxPlayers}`;
-                    }
+                    document.getElementById(statusElement).textContent = `Server je online`;
+                    document.getElementById(statusElement).classList.add("online");
                 } else {
-                    statusElement.textContent = "Server je Offline";
-                    statusElement.classList.add("offline");
-                    statusElement.classList.remove("online");
-                    playersElement.innerHTML = "Server je offline, nemožno načítať štatistiky.";
+                    document.getElementById(statusElement).textContent = `Server je offline`;
+                    document.getElementById(statusElement).classList.add("offline");
                 }
             } catch (error) {
-                console.error('Chyba pri kontrole stavu servera:', error);
-                clearInterval(dotsInterval);
-                document.getElementById("dots").textContent = "";
-
-                const statusElement = document.getElementById("server-status");
-                statusElement.textContent = "Server je Offline";
-                statusElement.classList.add("offline");
-                statusElement.classList.remove("online");
-
-                document.getElementById("player-info").innerHTML = "Server je offline, nemožno načítať štatistiky.";
+                document.getElementById(statusElement).textContent = "Chyba pri kontrole stavu servera";
+            } finally {
+                clearInterval(loadingInterval);
             }
         }
 
-        checkServerStatus();
-        setInterval(checkServerStatus, 60000); // Check every 60 seconds
+        fetchServerStatus(javaApiUrl, "server-status");
+        fetchServerStatus(bedrockApiUrl, "server-status");
     </script>
 </body>
 </html>
