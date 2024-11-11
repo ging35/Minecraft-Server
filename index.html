@@ -127,38 +127,60 @@
     </div>
 
     <script>
-        const javaApiUrl = 'https://api.mcsrvstat.us/2/community-killed.gl.joinmc.link';
-        const bedrockApiUrl = 'https://api.mcsrvstat.us/bedrock/t-subscriptions.gl.at.ply.gg:3262';
+        const apiUrl = 'https://api.mcsrvstat.us/2/community-killed.gl.joinmc.link';
 
         function startLoadingDots(id) {
             let dots = 0;
             return setInterval(() => {
-                document.getElementById(id).textContent = '.'.repeat((dots++ % 3) + 1);
+                document.getElementById(id).textContent = '.'.repeat((dots % 4) + 1);
+                dots++;
             }, 500);
         }
 
-        async function fetchServerStatus(apiUrl, statusElement) {
-            const loadingInterval = startLoadingDots("dots");
+        const dotsInterval = startLoadingDots("dots");
+
+        async function checkServerStatus() {
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
+                clearInterval(dotsInterval);
+                document.getElementById("dots").textContent = "";
+
+                const statusElement = document.getElementById("server-status");
+                const playersElement = document.getElementById("player-info");
 
                 if (data.online) {
-                    document.getElementById(statusElement).textContent = `Server je online`;
-                    document.getElementById(statusElement).classList.add("online");
+                    statusElement.textContent = "Server je Online";
+                    statusElement.classList.add("online");
+                    statusElement.classList.remove("offline");
+
+                    if (data.players) {
+                        const onlinePlayers = data.players.online;
+                        const maxPlayers = data.players.max;
+                        playersElement.innerHTML = `Počet hráčov online: ${onlinePlayers}/${maxPlayers}`;
+                    }
                 } else {
-                    document.getElementById(statusElement).textContent = `Server je offline`;
-                    document.getElementById(statusElement).classList.add("offline");
+                    statusElement.textContent = "Server je Offline";
+                    statusElement.classList.add("offline");
+                    statusElement.classList.remove("online");
+                    playersElement.innerHTML = "Server je offline, nemožno načítať štatistiky.";
                 }
             } catch (error) {
-                document.getElementById(statusElement).textContent = "Chyba pri kontrole stavu servera";
-            } finally {
-                clearInterval(loadingInterval);
+                console.error('Chyba pri kontrole stavu servera:', error);
+                clearInterval(dotsInterval);
+                document.getElementById("dots").textContent = "";
+
+                const statusElement = document.getElementById("server-status");
+                statusElement.textContent = "Server je Offline";
+                statusElement.classList.add("offline");
+                statusElement.classList.remove("online");
+
+                document.getElementById("player-info").innerHTML = "Server je offline, nemožno načítať štatistiky.";
             }
         }
 
-        fetchServerStatus(javaApiUrl, "server-status");
-        fetchServerStatus(bedrockApiUrl, "server-status");
+        checkServerStatus();
+        setInterval(checkServerStatus, 60000); // Check every 60 seconds
     </script>
 </body>
 </html>
