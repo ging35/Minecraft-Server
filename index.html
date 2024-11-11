@@ -66,7 +66,7 @@
         }
     </style>
 
-    <!-- Inline script to generate the navbar and add styling -->
+    <!-- Inline script to generate the navbar and add consistent styling -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const navbarHTML = `
@@ -88,9 +88,9 @@
                             <a href="#">Informácie</a>
                             <div class="dropdown-content">
                                 <a href="otvaracie_casy.html">Otvaracie časy</a>
-                                <a href="pravidla.html">Pravidlá servera</a> <!-- Placeholder link for server rules -->
-                                <a href="galeria.html">Galéria</a> <!-- Placeholder link for gallery -->
-                                <a href="novinky.html">Novinky</a> <!-- Placeholder link for news -->
+                                <a href="pravidla.html">Pravidlá servera</a>
+                                <a href="galeria.html">Galéria</a>
+                                <a href="novinky.html">Novinky</a>
                             </div>
                         </div>
                         <a href="https://discord.gg/dTTdNrgBSM" target="_blank">Discord</a>
@@ -124,16 +124,11 @@
             <h3>Discord:</h3>
             <p><a href="https://discord.gg/dTTdNrgBSM" target="_blank">Pripojte sa na Discord</a></p>
         </div>
-
-        <hr>
-
     </div>
 
     <script>
-        // API URL for the Minecraft server status
         const apiUrl = 'https://api.mcsrvstat.us/2/taking-superior.gl.joinmc.link';
 
-        // Dot animation function
         function startLoadingDots(id) {
             let dots = 0;
             return setInterval(() => {
@@ -142,59 +137,49 @@
             }, 500);
         }
 
-        // Start loading dots animation
         const dotsInterval = startLoadingDots("dots");
 
         async function checkServerStatus() {
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                clearInterval(dotsInterval); // Stop the loading animation
-                document.getElementById("dots").textContent = ""; // Clear dots text
+                clearInterval(dotsInterval);
+                document.getElementById("dots").textContent = "";
 
                 const statusElement = document.getElementById("server-status");
                 const playersElement = document.getElementById("player-info");
 
                 if (data.online) {
-                    // Update status to "Online" with green color
                     statusElement.textContent = "Server je Online";
                     statusElement.classList.add("online");
                     statusElement.classList.remove("offline");
 
-                    // Show player count if available
                     if (data.players) {
                         const onlinePlayers = data.players.online;
                         const maxPlayers = data.players.max;
                         playersElement.innerHTML = `Počet hráčov online: ${onlinePlayers}/${maxPlayers}`;
                     }
                 } else {
-                    // Update status to "Offline" with red color
                     statusElement.textContent = "Server je Offline";
                     statusElement.classList.add("offline");
                     statusElement.classList.remove("online");
-
-                    // Show message that statistics couldn't be loaded
                     playersElement.innerHTML = "Server je offline, nemožno načítať štatistiky.";
                 }
             } catch (error) {
                 console.error('Chyba pri kontrole stavu servera:', error);
-                clearInterval(dotsInterval); // Stop the loading animation
-                document.getElementById("dots").textContent = ""; // Clear dots text
+                clearInterval(dotsInterval);
+                document.getElementById("dots").textContent = "";
 
                 const statusElement = document.getElementById("server-status");
                 statusElement.textContent = "Server je Offline";
                 statusElement.classList.add("offline");
                 statusElement.classList.remove("online");
 
-                // Show message that statistics couldn't be loaded
                 document.getElementById("player-info").innerHTML = "Server je offline, nemožno načítať štatistiky.";
             }
         }
 
-        // Check server status on load
         checkServerStatus();
-
-        // Optional: Refresh status every minute
         setInterval(checkServerStatus, 60000); // Check every 60 seconds
     </script>
 </body>
