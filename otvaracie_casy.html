@@ -26,6 +26,7 @@
             max-width: 600px;
             width: 90%;
             text-align: center;
+            margin-top: 80px; /* Space for fixed header */
         }
         h1 {
             font-size: 2em;
@@ -57,41 +58,57 @@
             display: inline-block;
             margin-top: 20px;
         }
+        /* Server rules styling */
+        .rules {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .rules h2 {
+            color: #f0d600;
+            margin-bottom: 10px;
+        }
+        .rules ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .rules ul li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
     </style>
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const navbarHTML = `
-        <style>
-            .header { position: fixed; top: 0; width: 100%; background-color: #1a1a1a; padding: 10px 0; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; z-index: 1000; }
-            .navbar { display: flex; align-items: center; gap: 20px; }
-            .navbar a { color: #ffffff; text-decoration: none; padding: 10px 20px; font-size: 1em; }
-            .dropdown { position: relative; display: inline-block; }
-            .dropdown > a::after { content: " ▼"; font-size: 0.8em; }
-            .dropdown-content { display: none; position: absolute; background-color: #333333; min-width: 160px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); z-index: 1; top: 100%; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease; }
-            .dropdown-content a { color: #ffffff; padding: 10px 20px; text-decoration: none; display: block; text-align: left; }
-            .dropdown-content a:hover { background-color: #444; }
-            .dropdown:hover .dropdown-content { display: block; opacity: 1; transform: translateY(0); }
-        </style>
-        <header class="header">
-            <div class="navbar">
-                <a href="index.html">Domov</a>
-                <div class="dropdown">
-                    <a href="#">Informácie</a>
-                    <div class="dropdown-content">
-                        <a href="otvaracie_casy.html">Otvaracie časy</a>
-                        <a href="pravidla.html">Pravidlá servera</a>
-                        <a href="galeria.html">Galéria</a>
-                        <a href="novinky.html">Novinky</a>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navbarHTML = `
+                <style>
+                    .header { position: fixed; top: 0; width: 100%; background-color: #1a1a1a; padding: 10px 0; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; z-index: 1000; }
+                    .navbar { display: flex; align-items: center; gap: 20px; }
+                    .navbar a { color: #ffffff; text-decoration: none; padding: 10px 20px; font-size: 1em; }
+                    .dropdown { position: relative; display: inline-block; }
+                    .dropdown > a::after { content: " ▼"; font-size: 0.8em; }
+                    .dropdown-content { display: none; position: absolute; background-color: #333333; min-width: 160px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); z-index: 1; top: 100%; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease; }
+                    .dropdown-content a { color: #ffffff; padding: 10px 20px; text-decoration: none; display: block; text-align: left; }
+                    .dropdown-content a:hover { background-color: #444; }
+                    .dropdown:hover .dropdown-content { display: block; opacity: 1; transform: translateY(0); }
+                </style>
+                <header class="header">
+                    <div class="navbar">
+                        <a href="index.html">Domov</a>
+                        <div class="dropdown">
+                            <a href="#">Informácie</a>
+                            <div class="dropdown-content">
+                                <a href="otvaracie_casy.html">Otvaracie časy</a>
+                                <a href="pravidla.html">Pravidlá servera</a>
+                                <a href="galeria.html">Galéria</a>
+                                <a href="novinky.html">Novinky</a>
+                            </div>
+                        </div>
+                        <a href="https://discord.gg/dTTdNrgBSM" target="_blank">Discord</a>
                     </div>
-                </div>
-                <a href="https://discord.gg/dTTdNrgBSM" target="_blank">Discord</a>
-            </div>
-        </header>
-    `;
-    document.body.insertAdjacentHTML("afterbegin", navbarHTML);
-});
-</script>
-
+                </header>
+            `;
+            document.body.insertAdjacentHTML("afterbegin", navbarHTML);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
