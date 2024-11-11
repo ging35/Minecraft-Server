@@ -35,6 +35,7 @@
 
         .navbar {
             display: flex;
+            align-items: center; /* Fix vertical alignment */
             gap: 20px;
             position: relative;
         }
@@ -52,6 +53,11 @@
             display: inline-block;
         }
 
+        .dropdown > a::after {
+            content: " ▼";
+            font-size: 0.8em;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -60,6 +66,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             z-index: 1;
             top: 100%;
+            opacity: 0; /* For fade-in animation */
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .dropdown-content a {
@@ -74,8 +83,11 @@
             background-color: #444;
         }
 
+        /* Show dropdown with animation */
         .dropdown:hover .dropdown-content {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Main container styling */
