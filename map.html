@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Serveru SOSCH</title>
+    <style>
+        /* Basic reset and styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navbar styling */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        /* Dropdown styling with animation */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown > a::after {
+            content: " ▼";
+            font-size: 0.8em;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333333;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            top: 100%;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Main container styling for the iframe */
+        .iframe-container {
+            margin-top: 80px; /* Space for fixed header */
+            width: 90%;
+            max-width: 1000px;
+            height: 80vh;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="navbar">
+        <a href="index.html">Domov</a>
+        <div class="dropdown">
+            <a href="#">Informácie</a>
+            <div class="dropdown-content">
+                <a href="otvaracie_casy.html">Otvaracie časy</a>
+                <a href="pravidla.html">Pravidlá servera</a>
+                <a href="galeria.html">Galéria</a>
+                <a href="novinky.html">Novinky</a>
+                <a href="map.html">Mapa</a> <!-- Updated to link to this file -->
+            </div>
+        </div>
+        <a href="https://discord.gg/dTTdNrgBSM" target="_blank">Discord</a>
+    </div>
+</header>
+
+<!-- Container for the map iframe -->
+<div class="iframe-container">
+    <iframe src="http://p-bc.gl.at.ply.gg:56345" title="Minecraft Server Map"></iframe>
+</div>
+
+</body>
+</html>
 
