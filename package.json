@@ -1,0 +1,4 @@
+"dependencies": {
+  "@vercel/analytics": "latest",
+  // other dependencies
+}
