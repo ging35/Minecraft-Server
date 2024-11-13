@@ -1,8 +1,12 @@
 {
   "name": "soschmc",
   "version": "1.0.0",
+  "description": "Your project description",
+  "main": "index.js",
   "dependencies": {
-    "@vercel/analytics": "latest"
-    // other dependencies here
+    // dependencies here
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
