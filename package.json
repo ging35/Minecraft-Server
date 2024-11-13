@@ -1,4 +1,8 @@
-"dependencies": {
-  "@vercel/analytics": "latest",
-  // other dependencies
+{
+  "name": "soschmc",
+  "version": "1.0.0",
+  "dependencies": {
+    "@vercel/analytics": "latest"
+    // other dependencies here
+  }
 }
