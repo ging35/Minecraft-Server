@@ -4,7 +4,6 @@
   "description": "Your project description",
   "main": "index.js",
   "dependencies": {
-    // dependencies here
   },
   "scripts": {
     "start": "node index.js"
